@@ -35,6 +35,7 @@ services:
     networks:
       - metricas
     depends_on:
+      - alertmanager
       - cineminha
       - db
   grafana:
@@ -49,10 +50,25 @@ services:
       - prometheus
       - cineminha
       - db
+  alertmanager:
+    image: prom/alertmanager
+    restart: unless-stopped
+    ports:
+    - '9093:9093'
+    volumes:
+    - ./alertmanager.yml:/etc/alertmanager.yml
+    - alertmanager-data:/etc/alertmanager/data
+    command: --config.file=/etc/alertmanager.yml --log.level=debug
+    networks:
+      - metricas
+    depends_on:
+      - cineminha
+      - db
 
 volumes:
   grafana-volume:
   prometheus-volume:
+  alertmanager-data:
 
 networks:
   metricas:
