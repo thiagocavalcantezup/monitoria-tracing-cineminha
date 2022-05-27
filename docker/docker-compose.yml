@@ -30,6 +30,7 @@ services:
     volumes:
       - prometheus-volume:/etc/prometheus/
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./alerts_rules1.yml:/etc/prometheus/alerts_rules1.yml
     ports:
       - '9090:9090'
     networks:

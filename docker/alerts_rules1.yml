@@ -1,0 +1,15 @@
+groups:
+  - name: cineminha-performance
+    rules:
+      - alert: altoUsoDeMemoriaDaJVM
+        expr: (sum(jvm_memory_used_bytes) / sum(jvm_memory_max_bytes)) > 0.7
+        for: 5m
+        labels:
+          app: cineminha
+          severity: high
+          group: backend-cineminha
+          env: production
+        annotations:
+          title: Uso de Memória pela JVM Alto
+          summary: O uso de memória pela JVM está com valores acima do normal.
+          description: O uso de memória pela JVM está com a taxa acima de 70% por mais de 5 minutos.
